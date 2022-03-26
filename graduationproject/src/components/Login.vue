@@ -3,7 +3,7 @@
     <div class="login_box">
       <!-- 标题 -->
       <div class="title_box">
-        <span>学生出勤管理系统</span>
+        <span>学生考勤管理系统</span>
       </div>
       <!-- 登录表单 -->
       <el-form ref="loginFormRef" label-width="0px" :rules="loginFormRules" class="login_form" :model="loginForm">
@@ -22,14 +22,134 @@
         <!-- 注册重置 -->
         <el-form-item class="btns">
           <el-button type="info" @click="resetLoginForm" size="mini">重置</el-button>
-          <el-button size="mini">注册</el-button>
+          <el-button size="mini" @click="RegUserDialog">注册</el-button>
         </el-form-item>
       </el-form>
     </div>
     <!-- 注册用户 -->
+    <el-dialog title="注册新用户" :visible.sync="RegUserDialogVisible" width="40%" @close="CloseRegUserDialog">
+      <!-- tabs标签 -->
+      <el-tabs type="border-card" :stretch="true">
+        <el-tab-pane>
+          <span slot="label" @click="RegStudent">学生注册</span>
+          <!-- 学生注册表单 -->
+          <el-form :model="RegUserForm" :rules="RegUserFormRules" ref="RegUserRef" label-width="100px" label-position="left">
+            <el-form-item label="学号" prop="id">
+              <el-input v-model="RegUserForm.id"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="RegUserForm.password"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="角色" prop="identity">
+              <el-radio-group v-model="RegUserForm.identity">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="老师"></el-radio>
+                <el-radio label="管理员"></el-radio>
+              </el-radio-group>
+            </el-form-item> -->
+            <el-form-item label="姓名" prop="name">
+              <el-input v-model="RegUserForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+              <el-radio-group v-model="RegUserForm.gender">
+                <el-radio label="男"></el-radio>
+                <el-radio label="女"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="院系" prop="yuanxi">
+              <el-input v-model="RegUserForm.yuanxi"></el-input>
+            </el-form-item>
+            <el-form-item label="专业" prop="discipline">
+              <el-input v-model="RegUserForm.discipline"></el-input>
+            </el-form-item>
+            <el-form-item label="班级" prop="whichClas">
+              <el-input v-model="RegUserForm.whichClas"></el-input>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="RegUserForm.phone"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label" @click="RegTeacher">教师注册</span>
+          <!-- 教师注册表单 -->
+          <el-form :model="RegUserForm" :rules="RegUserFormRules" ref="RegUserRef" label-width="100px" label-position="left">
+            <el-form-item label="工号" prop="id">
+              <el-input v-model="RegUserForm.id"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="RegUserForm.password"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="角色" prop="identity">
+              <el-radio-group v-model="RegUserForm.identity">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="老师"></el-radio>
+                <el-radio label="管理员"></el-radio>
+              </el-radio-group>
+            </el-form-item> -->
+            <el-form-item label="姓名" prop="name">
+              <el-input v-model="RegUserForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+              <el-radio-group v-model="RegUserForm.gender">
+                <el-radio label="男"></el-radio>
+                <el-radio label="女"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="院系" prop="yuanxi">
+              <el-input v-model="RegUserForm.yuanxi"></el-input>
+            </el-form-item>
+            <el-form-item label="专业" prop="discipline">
+              <el-input v-model="RegUserForm.discipline"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="班级" prop="whichClas">
+              <el-input v-model="RegUserForm.whichClas"></el-input>
+            </el-form-item> -->
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="RegUserForm.phone"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+        <el-tab-pane>
+          <span slot="label" @click="RegAdmin">管理员注册</span>
+          <!-- 管理员注册表单 -->
+          <el-form :model="RegUserForm" :rules="RegUserFormRules" ref="RegUserRef" label-width="100px" label-position="left">
+            <el-form-item label="学号/工号" prop="id">
+              <el-input v-model="RegUserForm.id"></el-input>
+            </el-form-item>
+            <el-form-item label="密码" prop="password">
+              <el-input v-model="RegUserForm.password"></el-input>
+            </el-form-item>
+            <!-- <el-form-item label="角色" prop="identity">
+              <el-radio-group v-model="RegUserForm.identity">
+                <el-radio label="学生"></el-radio>
+                <el-radio label="老师"></el-radio>
+                <el-radio label="管理员"></el-radio>
+              </el-radio-group>
+            </el-form-item> -->
+            <el-form-item label="姓名" prop="name">
+              <el-input v-model="RegUserForm.name"></el-input>
+            </el-form-item>
+            <el-form-item label="性别" prop="gender">
+              <el-radio-group v-model="RegUserForm.gender">
+                <el-radio label="男"></el-radio>
+                <el-radio label="女"></el-radio>
+              </el-radio-group>
+            </el-form-item>
+            <el-form-item label="电话" prop="phone">
+              <el-input v-model="RegUserForm.phone"></el-input>
+            </el-form-item>
+          </el-form>
+        </el-tab-pane>
+      </el-tabs>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="RegUserDialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="RegUser">注册</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
-
+ 
 <script>
 export default {
   data () {
@@ -39,8 +159,20 @@ export default {
         username: '',
         password: '',
       },
+      UserInfo: {
+        id: '12345678901',
+        name: 'xiaobing',
+        gender: '男',
+        identity: '管理员',
+        yuanxi: '电信学院',
+        discipline: '自动化',
+        whichClas: '自BG181',
+        phone: '13118573647',
+      },
+      //注册用户对话框显示与否
+      RegUserDialogVisible: false,
       //   注册用户数据
-      regForm: {
+      RegUserForm: {
         //账号
         id: '',
         //密码
@@ -73,6 +205,26 @@ export default {
           { min: 6, max: 20, message: "输入长度在6~20个字符", trigger: "blur" },
         ],
       },
+      //注册用户验证规则
+      RegUserFormRules: {
+        id: [{ required: true, message: "请输入学号/工号", trigger: "blur" }],
+        password: [{ required: true, message: "请设置密码", trigger: "blur" }],
+        identity: [{ required: true, message: "请选择角色", trigger: "blur" }],
+        name: [
+          { required: true, message: "请输入用户名", trigger: "blur" },
+          { min: 2, max: 10, message: "输入长度在2~10个字符", trigger: "blur" },
+        ],
+        gender: [{ required: true, message: "请选择性别", trigger: "blur" }],
+        yuanxi: [{ required: true, message: "请输入院系", trigger: "blur" }],
+        discipline: [{ required: true, message: "请输入专业", trigger: "blur" }],
+        whichClas: [{ required: true, message: "请输入班级", trigger: "blur" }],
+        phone: [{ required: true, message: "请输入班级", trigger: "blur" },
+        { min: 11, max: 11, message: '长度11个字符', trigger: 'blur' },
+        {
+          pattern: /^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/,
+          message: '请输入正确的手机号码', trigger: 'blur'
+        },]
+      }
     };
   },
   methods: {
@@ -83,17 +235,64 @@ export default {
 
     login () {
       this.$refs.loginFormRef.validate(async (valid) => {
-        if (!valid) return; //验证不通过
-        const { data: res } = await this.$http.post("login", this.loginForm);
-        // console.log(res);
-        if (res.meta.status !== 200) return this.$message.error("登录失败");
+        if (!valid) return this.$message.error('信息输入格式有误！') //验证不通过
+        // 提交登录信息
+        // const { data: res } = await this.$http.post("login", this.loginForm);
+        // // console.log(res);
+        // if (res.meta.status !== 200) return this.$message.error("登录失败");
+        console.log(this.loginForm);
+        if (!(this.loginForm.username == 123456 && this.loginForm.password == 123456)) return this.$message.error('账号或密码错误！')
         this.$message.success("登录成功");
         // 保存token到sessionStorage页面关闭清除token
-        window.sessionStorage.setItem("token", res.data.token);
+        // window.sessionStorage.setItem("token", res.data.token);
+
+        window.sessionStorage.setItem("token", '登录成功');
+        // 用户信息
+        window.sessionStorage.setItem("UserInfo", JSON.stringify(this.UserInfo));
         // 通过编程式导航跳转到后台主页路由地址是/home
         this.$router.push("/home");
       });
     },
+
+    // 显示注册用户
+    RegUserDialog () {
+      this.RegUserDialogVisible = true
+    },
+    // 注册为学生
+    RegStudent () {
+      this.RegUserForm.identity = '学生'
+      this.$refs.RegUserRef.resetFields()
+    },
+    // 注册为教师
+    RegTeacher () {
+      this.RegUserForm.identity = '教师'
+      this.$refs.RegUserRef.resetFields()
+    },
+    // 注册为管理员
+    RegAdmin () {
+      this.RegUserForm.identity = '管理员'
+      this.$refs.RegUserRef.resetFields()
+    },
+    //注册用户
+    RegUser () {
+      this.$refs.RegUserRef.validate(async (valid) => {
+        if (!valid) return this.$message.error('数据预验证不通过请检查信息')
+        // 更改请求地址即可
+        // const { data: res } = await this.$http.post('regUser', this.RegUserForm)
+        // // 注册失败
+        // if (res.meta.status !== 200) return this.$message.error(res.meta.msg)
+        // 注册成功
+
+        if (this.RegUserForm.identity === '管理员' || '教师') this.$message.success('注册信息提交成功等待审核')
+        else this.$message.success('注册成功')
+        this.RegUserDialogVisible = false
+        console.log(this.RegUserForm);
+      })
+    },
+    //关闭注册对话框清除表单信息
+    CloseRegUserDialog () {
+      this.$refs.RegUserRef.resetFields()
+    }
   },
 }
 </script>

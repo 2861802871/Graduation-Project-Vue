@@ -4,18 +4,18 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{path:'/home'}">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用戶管理</el-breadcrumb-item>
-      <el-breadcrumb-item>学生列表</el-breadcrumb-item>
+      <el-breadcrumb-item>教师列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片区 -->
     <el-card class="box-card">
       <el-row :gutter="20">
         <el-col :span="7">
-          <el-input :clearable="true" placeholder="请输入学号" v-model="SearchData" @clear="GetStudentList">
+          <el-input :clearable="true" placeholder="请输入工号" v-model="SearchData" @clear="GetStudentList">
             <el-button slot="append" icon="el-icon-search" @click="GetStudentList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="AddStudentDialog">添加学生用户</el-button>
+          <el-button type="primary" @click="AddStudentDialog">添加教师用户</el-button>
         </el-col>
       </el-row>
       <!-- 学生数据表格 -->
@@ -27,7 +27,6 @@
         <el-table-column prop="identity" label="角色"></el-table-column>
         <el-table-column prop="yuanxi" label="院系"></el-table-column>
         <el-table-column prop="discipline" label="专业"></el-table-column>
-        <el-table-column prop="whichClas" label="班级"></el-table-column>
         <el-table-column prop="phone" label="电话" min-width="90px"></el-table-column>
         <el-table-column label="操作" width="185px">
           <template slot-scope="scope">
@@ -50,7 +49,7 @@
           <span slot="label">添加学生</span>
           <!-- 学生注册表单 -->
           <el-form :model="AddStudentForm" :rules="AddStudentFormRules" ref="AddStudentFormRef" label-width="100px" label-position="left">
-            <el-form-item label="学号" prop="id">
+            <el-form-item label="工号" prop="id">
               <el-input v-model="AddStudentForm.id"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
@@ -71,9 +70,6 @@
             <el-form-item label="专业" prop="discipline">
               <el-input v-model="AddStudentForm.discipline"></el-input>
             </el-form-item>
-            <el-form-item label="班级" prop="whichClas">
-              <el-input v-model="AddStudentForm.whichClas"></el-input>
-            </el-form-item>
             <el-form-item label="电话" prop="phone">
               <el-input v-model="AddStudentForm.phone"></el-input>
             </el-form-item>
@@ -87,10 +83,10 @@
     </el-dialog>
 
     <!-- 编辑学生对话框 -->
-    <el-dialog title="提示" :visible.sync="EditDialogVisible" width="40%" @close="CloseEditStudent">
+    <el-dialog title="编辑用户信息" :visible.sync="EditDialogVisible" width="40%" @close="CloseEditStudent">
       <!-- 编辑学生表单 -->
       <el-form :model="EditStudentInfo" :rules="AddStudentFormRules" ref="EditStudentFormRef" label-width="100px" label-position="left">
-        <el-form-item label="学号">
+        <el-form-item label="工号">
           <!-- 学号作为登录账号禁止修改学号 -->
           <el-input v-model="EditStudentInfo.id" disabled></el-input>
         </el-form-item>
@@ -111,9 +107,6 @@
         </el-form-item>
         <el-form-item label="专业" prop="discipline">
           <el-input v-model="EditStudentInfo.discipline"></el-input>
-        </el-form-item>
-        <el-form-item label="班级" prop="whichClas">
-          <el-input v-model="EditStudentInfo.whichClas"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="EditStudentInfo.phone"></el-input>
@@ -156,7 +149,7 @@ export default {
           id: '12345678901',
           name: 'xiaobing',
           gender: '男',
-          identity: '学生',
+          identity: '教师',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -165,7 +158,7 @@ export default {
           id: '12345678902',
           name: 'xiaoai',
           gender: '女',
-          identity: '学生',
+          identity: '教师',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG182',
@@ -174,7 +167,7 @@ export default {
           id: '12345678903',
           name: 'xiaoyi',
           gender: '男',
-          identity: '学生',
+          identity: '教师',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -183,7 +176,7 @@ export default {
           id: '12345678904',
           name: 'xiaobing',
           gender: '男',
-          identity: '学生',
+          identity: '教师',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -192,7 +185,7 @@ export default {
           id: '12345678905',
           name: 'xiaoai',
           gender: '女',
-          identity: '学生',
+          identity: '教师',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG182',
@@ -213,7 +206,7 @@ export default {
         //性别
         gender: '',
         //身份
-        identity: '学生',
+        identity: '',
         //院系
         yuanxi: '',
         //专业

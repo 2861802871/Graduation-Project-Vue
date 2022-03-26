@@ -4,30 +4,27 @@
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{path:'/home'}">首页</el-breadcrumb-item>
       <el-breadcrumb-item>用戶管理</el-breadcrumb-item>
-      <el-breadcrumb-item>学生列表</el-breadcrumb-item>
+      <el-breadcrumb-item>管理员列表</el-breadcrumb-item>
     </el-breadcrumb>
     <!-- 卡片区 -->
     <el-card class="box-card">
       <el-row :gutter="20">
         <el-col :span="7">
-          <el-input :clearable="true" placeholder="请输入学号" v-model="SearchData" @clear="GetStudentList">
+          <el-input :clearable="true" placeholder="请输入学号/工号" v-model="SearchData" @clear="GetStudentList">
             <el-button slot="append" icon="el-icon-search" @click="GetStudentList"></el-button>
           </el-input>
         </el-col>
         <el-col :span="4">
-          <el-button type="primary" @click="AddStudentDialog">添加学生用户</el-button>
+          <el-button type="primary" @click="AddStudentDialog">添加管理员用户</el-button>
         </el-col>
       </el-row>
       <!-- 学生数据表格 -->
       <el-table :data="StudentList.users" :border="true" :stripe="true">
         <el-table-column type="index" label="序号"></el-table-column>
-        <el-table-column prop="id" label="学号" min-width="90px"></el-table-column>
+        <el-table-column prop="id" label="学号/工号" min-width="90px"></el-table-column>
         <el-table-column prop="name" label="姓名"></el-table-column>
         <el-table-column prop="gender" label="性别"></el-table-column>
         <el-table-column prop="identity" label="角色"></el-table-column>
-        <el-table-column prop="yuanxi" label="院系"></el-table-column>
-        <el-table-column prop="discipline" label="专业"></el-table-column>
-        <el-table-column prop="whichClas" label="班级"></el-table-column>
         <el-table-column prop="phone" label="电话" min-width="90px"></el-table-column>
         <el-table-column label="操作" width="185px">
           <template slot-scope="scope">
@@ -47,10 +44,10 @@
       <!-- tabs标签 -->
       <el-tabs type="border-card" :stretch="true">
         <el-tab-pane>
-          <span slot="label">添加学生</span>
+          <span slot="label">添加管理员</span>
           <!-- 学生注册表单 -->
           <el-form :model="AddStudentForm" :rules="AddStudentFormRules" ref="AddStudentFormRef" label-width="100px" label-position="left">
-            <el-form-item label="学号" prop="id">
+            <el-form-item label="学号/工号" prop="id">
               <el-input v-model="AddStudentForm.id"></el-input>
             </el-form-item>
             <el-form-item label="密码" prop="password">
@@ -65,15 +62,6 @@
                 <el-radio label="女"></el-radio>
               </el-radio-group>
             </el-form-item>
-            <el-form-item label="院系" prop="yuanxi">
-              <el-input v-model="AddStudentForm.yuanxi"></el-input>
-            </el-form-item>
-            <el-form-item label="专业" prop="discipline">
-              <el-input v-model="AddStudentForm.discipline"></el-input>
-            </el-form-item>
-            <el-form-item label="班级" prop="whichClas">
-              <el-input v-model="AddStudentForm.whichClas"></el-input>
-            </el-form-item>
             <el-form-item label="电话" prop="phone">
               <el-input v-model="AddStudentForm.phone"></el-input>
             </el-form-item>
@@ -87,10 +75,10 @@
     </el-dialog>
 
     <!-- 编辑学生对话框 -->
-    <el-dialog title="提示" :visible.sync="EditDialogVisible" width="40%" @close="CloseEditStudent">
+    <el-dialog title="编辑管理员用户" :visible.sync="EditDialogVisible" width="40%" @close="CloseEditStudent">
       <!-- 编辑学生表单 -->
       <el-form :model="EditStudentInfo" :rules="AddStudentFormRules" ref="EditStudentFormRef" label-width="100px" label-position="left">
-        <el-form-item label="学号">
+        <el-form-item label="学号/工号">
           <!-- 学号作为登录账号禁止修改学号 -->
           <el-input v-model="EditStudentInfo.id" disabled></el-input>
         </el-form-item>
@@ -105,15 +93,6 @@
             <el-radio label="男"></el-radio>
             <el-radio label="女"></el-radio>
           </el-radio-group>
-        </el-form-item>
-        <el-form-item label="院系" prop="yuanxi">
-          <el-input v-model="EditStudentInfo.yuanxi"></el-input>
-        </el-form-item>
-        <el-form-item label="专业" prop="discipline">
-          <el-input v-model="EditStudentInfo.discipline"></el-input>
-        </el-form-item>
-        <el-form-item label="班级" prop="whichClas">
-          <el-input v-model="EditStudentInfo.whichClas"></el-input>
         </el-form-item>
         <el-form-item label="电话" prop="phone">
           <el-input v-model="EditStudentInfo.phone"></el-input>
@@ -156,7 +135,7 @@ export default {
           id: '12345678901',
           name: 'xiaobing',
           gender: '男',
-          identity: '学生',
+          identity: '管理员',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -165,7 +144,7 @@ export default {
           id: '12345678902',
           name: 'xiaoai',
           gender: '女',
-          identity: '学生',
+          identity: '管理员',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG182',
@@ -174,7 +153,7 @@ export default {
           id: '12345678903',
           name: 'xiaoyi',
           gender: '男',
-          identity: '学生',
+          identity: '管理员',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -183,7 +162,7 @@ export default {
           id: '12345678904',
           name: 'xiaobing',
           gender: '男',
-          identity: '学生',
+          identity: '管理员',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG181',
@@ -192,7 +171,7 @@ export default {
           id: '12345678905',
           name: 'xiaoai',
           gender: '女',
-          identity: '学生',
+          identity: '管理员',
           yuanxi: '电信学院',
           discipline: '自动化',
           whichClas: '自BG182',
@@ -213,7 +192,7 @@ export default {
         //性别
         gender: '',
         //身份
-        identity: '学生',
+        identity: '',
         //院系
         yuanxi: '',
         //专业

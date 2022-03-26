@@ -6,7 +6,7 @@
         <!-- <img src="../assets/heima.png" alt="" /> -->
         <span>学生出勤管理系统</span>
       </div>
-      <el-button type="primary" @click="logout">退出</el-button>
+      <el-button size="mini" type="primary" @click="logout">退出</el-button>
     </el-header>
     <!-- 主体 -->
     <el-container>
@@ -22,35 +22,13 @@
               <span>{{ item.authName }}</span>
             </template>
             <!-- 除学分管理外二级菜单 -->
-            <div v-if="item.id!==2">
-              <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavStatus('/'+subItem.path)">
-                <template slot="title">
-                  <i class="el-icon-menu"></i>
-                  <span>{{ subItem.authName }}</span>
-                </template>
-              </el-menu-item>
-            </div>
-            <!-- 学分管理菜单 -->
-            <div v-if="item.id===2">
-              <el-submenu index="1-4" v-for="subItem1 in item.children" :key="subItem1.id">
-                <template slot="title">
-                  <i class="el-icon-s-management"></i>
-                  <span>{{subItem1.authName}}</span>
-                </template>
-                <el-submenu index="1-2" v-for="subItem2 in subItem1.children" :key="subItem2.id">
-                  <template slot="title">
-                    <i class="el-icon-s-promotion"></i>
-                    <span>{{subItem2.authName}}</span>
-                  </template>
-                  <el-menu-item :index="'/'+subItem3.path" v-for="subItem3 in subItem2.children" :key="subItem3.id" @click="saveNavStatus('/'+subItem3.path)">
-                    <template slot="title">
-                      <i class=""></i>
-                      <span>{{ subItem3.authName }}</span>
-                    </template>
-                  </el-menu-item>
-                </el-submenu>
-              </el-submenu>
-            </div>
+            <!-- <div v-if="item.id!==2"> -->
+            <el-menu-item :index="'/'+subItem.path" v-for="subItem in item.children" :key="subItem.id" @click="saveNavStatus('/'+subItem.path)">
+              <template slot="title">
+                <i class="el-icon-menu"></i>
+                <span>{{ subItem.authName }}</span>
+              </template>
+            </el-menu-item>
           </el-submenu>
         </el-menu>
       </el-aside>
@@ -91,7 +69,7 @@ export default {
             {
               id: 12,
               authName: '管理员',
-              path: 'admini',
+              path: 'admin',
               children: [],
               order: null
             }
@@ -105,45 +83,8 @@ export default {
           children: [
             {
               id: 20,
-              authName: '电信学院',
-              path: 'faculty',
-              children: [
-                {
-                  id: 200,
-                  authName: '自动化',
-                  path: 'profession',
-                  children: [
-                    {
-                      id: 2000,
-                      authName: '自BG181',
-                      path: 'automation181',
-                      children: [],
-                      order: null
-                    },
-                    {
-                      id: 2001,
-                      authName: '自BG182',
-                      path: 'automation182',
-                      children: [],
-                      order: null
-                    },
-                    {
-                      id: 2002,
-                      authName: '自BG191',
-                      path: 'automation191',
-                      children: [],
-                      order: null
-                    }, {
-                      id: 2003,
-                      authName: '自BG192',
-                      path: 'automation192',
-                      children: [],
-                      order: null
-                    },
-                  ],
-                  order: 1
-                }
-              ],
+              authName: '管理学分',
+              path: 'score',
               order: 1
             },
 
@@ -171,7 +112,7 @@ export default {
             }, {
               id: 32,
               authName: '假条查询',
-              path: 'Inquire',
+              path: 'inquire',
               children: [],
               order: null
             }, {
@@ -192,7 +133,7 @@ export default {
             {
               id: 40,
               authName: '基本信息',
-              path: 'userInfo',
+              path: 'UserInfo',
               children: [],
               order: null
             },
@@ -210,7 +151,6 @@ export default {
       //   菜单的图标数据
       iconsObj: {
         "1": "el-icon-user-solid",
-        "2": "",
         "2": "el-icon-s-goods",
         "3": "el-icon-s-order",
         "4": "el-icon-s-custom",
